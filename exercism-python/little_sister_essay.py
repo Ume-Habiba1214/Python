@@ -1,52 +1,83 @@
-def capitalize_title(title):
-    """Convert the first letter of each word in the title to uppercase if needed.
+def add_prefix_un(word):
+    """Take the given word and add the 'un' prefix.
 
     Parameters:
-        title (str): Essay title that needs title casing.
+        word (str): The root word.
 
     Returns:
-        str: The title string in title case (first letters capitalized).
+        str: Root word prepended with 'un'.
     """
 
-    return title.title()
+    return "un"+word
 
 
-def check_sentence_ending(sentence):
-    """Check the ending of the sentence to verify that a period is present.
+def make_word_groups(vocab_words):
+    """Transform a list containing a prefix and words.
 
     Parameters:
-        sentence (str): A sentence to check.
+        vocab_words (list[str]): Vocabulary words with prefix at first index.
 
     Returns:
-        bool: Is the sentence punctuated correctly?
+        str: Prefix followed by vocabulary words with prefix applied.
+
+    This function takes a `vocab_words` list of strings and returns a string
+    with the prefix and the words with prefix applied, separated by ' :: '.
+
+    Examples:
+        >>> list('en', 'close', 'joy', 'lighten')
+        'en :: enclose :: enjoy :: enlighten'.
+
     """
 
-    return sentence.endswith(".")
+    joining_word=" :: "+ vocab_words[0]
+    return joining_word.join(vocab_words)
 
 
-def clean_up_spacing(sentence):
-    """Trim any leading or trailing whitespace from the sentence.
+def remove_suffix_ness(word):
+    """Remove the suffix from the word while keeping spelling in mind.
 
     Parameters:
-        sentence (str): A sentence to clean of leading and trailing space characters.
+        word (str): Word to remove suffix from.
 
     Returns:
-        str: A sentence that has been cleaned of leading and trailing space characters.
+        str: Word with suffix removed & spelling adjusted.
+
+    Examples:
+        >>> remove_suffix_ness('heaviness')
+        'heavy'
+
+        >>> remove_suffix_ness('sadness')
+        'sad'
+
     """
+    
+    if word.endswith("iness"):
+        return word.replace("iness","y")
+    else:
+        return word.replace("ness","")
 
-    return sentence.strip(" ")
+    
 
 
-def replace_word_choice(sentence, old_word, new_word):
-    """Replace a word in the provided sentence with a new one.
+def adjective_to_verb(sentence, index):
+    """Change the adjective within the sentence to a verb.
 
     Parameters:
-        sentence (str): A sentence to replace words in.
-        old_word (str): The word to replace.
-        new_word (str): The replacement word.
+        sentence (str): The word used in a sentence as an adjective.
+        index (int): Index of the adjective to remove and transform.
 
     Returns:
-        str: Input sentence with new words in place of old words.
+        str: The extracted adjective in verb form.
+
+    Examples:
+        >>> adjective_to_verb('It got dark as the sun set.', 2)
+        'darken'
+
+        >>> adjective_to_verb('The ink stains her fingers black.', -1)
+        'blacken'
+
     """
 
-    return sentence.replace(old_word,new_word)
+    list_of_word=sentence.split(" ")
+    verb=list_of_word[index].strip(".")+"en"
+    return verb
